@@ -1,0 +1,36 @@
+doctype html
+//if IE 8
+// [if gt IE 8] <!
+// <![endif]
+head
+  script(src='/js/vendor/298279967.js')
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width')
+  title The Internet
+  link(href='/css/app.css' rel='stylesheet')
+  link(href='/css/font-awesome.css' rel='stylesheet')
+  script(src='/js/vendor/jquery-1.11.3.min.js')
+  script(src='/js/vendor/jquery-ui-1.11.4/jquery-ui.js')
+  script(src='/js/foundation/foundation.js')
+  script(src='/js/foundation/foundation.alerts.js')
+  script.
+    $(document).foundation();
+.row
+  #flash-messages.large-12.columns
+    each t in ['notice', 'error', 'success']
+      if flash && flash.t
+        #flash.flash.type(data-alert='' class='=t')
+          = flash.t
+          a.close(href='#') &times;
+.row
+  a(href='https://github.com/sriv/the-internet-express')
+    img(style='position: absolute; top: 0; right: 0; border: 0;' src='/img/forkme_right_green_007200.png' alt='Fork me on GitHub')
+  #content.large-12.columns
+    block content
+
+#page-footer.row
+  .large-4.large-centered.columns
+    hr
+    div(style='text-align: center;')
+      | Inspired by 
+      a(target='_blank' href='http://elementalselenium.com/') Elemental Selenium tips
