@@ -3,6 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var multer  = require('multer')
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage })
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +33,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.get('/upload', (_req, res) => {
+  res.render('upload');
+});
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  if(!req.file)
+    res.render('upload');
+  else
+    res.render('uploaded', {uploadedFile: req.file.originalname});
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

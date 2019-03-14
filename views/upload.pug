@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  script(src='/js/vendor/dropzone.js')
+  style.
+    #drag-drop-upload {
+    border-style: dashed;
+    border-width: 5px;
+    border-color: red;
+    height: 400px;
+    width: 400px;
+    }
+  script.
+    $('.dz-success-mark').remove();
+  .example
+    h3 File Uploader
+    p
+      | Choose a file on your system and then click upload. Or, drag and drop a file into the area below.
+    form(method='POST' enctype='multipart/form-data')
+      input#file-upload(type='file' name='file')
+      br
+      input#file-submit.button(type='submit' value='Upload')
+  #drag-drop-upload.dz-success-mark
+  #preview-template(style='display: none;')
+    .dz-preview.dz-file-preview
+      .dz-details
+        .dz-filename
+          span(data-dz-name='')
+      .dz-success-mark
+        span &#x2714;
+  script.
+    $('div#drag-drop-upload').dropzone({
+    url: '/upload',
+    previewTemplate: $('#preview-template').html()
+    });
