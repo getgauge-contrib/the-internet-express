@@ -80,6 +80,10 @@ app.get('/download_secure/jqueryui/menu/:filename', isAuthenticated, (req, res) 
   res.send('public/uploads/jqueryui/menu/' + req.params['filename']);
 });
 
+app.get('/horizontal_slider', (req, res) => {
+  res.render('horizontal_slider');
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

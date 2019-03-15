@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .example
+    h3 Horizontal Slider
+    h4.subheader
+      | Set the focus on the slider (by clicking on it) and use the arrow keys to move it right and left. Or click and drag the slider with your mouse. It will indicate the value of the slider to the right.
+    .sliderContainer
+      input(type='range' min='0.0' max='5.0' step='0.5' value='0' onchange='showValue(this.value)')
+      span#range 0
+  script(type='text/javascript').
+    function showValue(newValue) { $("#range").html(newValue); }
