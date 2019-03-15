@@ -23,10 +23,13 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 var isAuthenticated = (req, res, next) => {
-  if(req.isAuthenticated()) {
+  if(req.user && req.user.authenticated) {
     return next()
   } else {
-    res.send({message: 'Unauthorized', status: 401});
+    res.locals.message = 'Unauthorized';
+    res.locals.error = {status: 401};
+    res.status(401);
+    res.render('error');
   }
 }
 
@@ -62,11 +65,11 @@ app.get('/download', (_req, res) => {
 });
 
 app.get('/download/:filename', (req, res) => {
-  res.send('public/uploads/' + req.params['filename']);
+  res.download('public/uploads/' + req.params['filename']);
 });
 
 app.get('/download/jqueryui/menu/:filename', (req, res) => {
-  res.send('public/uploads/jqueryui/menu/' + req.params['filename']);
+  res.download('public/uploads/jqueryui/menu/' + req.params['filename']);
 });
 
 app.get('/download_secure', isAuthenticated, (req, res) => {
@@ -76,8 +79,12 @@ app.get('/download_secure', isAuthenticated, (req, res) => {
   res.render('download', {files: fileNames});
 });
 
+app.get('/download_secure/:filename', (req, res) => {
+  res.download('public/uploads/' + req.params['filename']);
+});
+
 app.get('/download_secure/jqueryui/menu/:filename', isAuthenticated, (req, res) => {
-  res.send('public/uploads/jqueryui/menu/' + req.params['filename']);
+  res.download('public/uploads/jqueryui/menu/' + req.params['filename']);
 });
 
 app.get('/horizontal_slider', (req, res) => {
