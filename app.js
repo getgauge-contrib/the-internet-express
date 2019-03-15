@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var multer  = require('multer')
+var fs = require('fs');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -20,6 +21,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+var isAuthenticated = (req, res, next) => {
+  if(req.isAuthenticated()) {
+    return next()
+  } else {
+    res.send({message: 'Unauthorized', status: 401});
+  }
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,6 +54,31 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.render('uploaded', {uploadedFile: req.file.originalname});
 });
 
+app.get('/download', (_req, res) => {
+  var fileNames = fs.readdirSync('public/uploads', { withFileTypes: true })
+    .filter(dirent => dirent.isFile() && dirent.name !== '.gitkeep')
+    .map(dirent => dirent.name);
+  res.render('download', {files: fileNames});
+});
+
+app.get('/download/:filename', (req, res) => {
+  res.send('public/uploads/' + req.params['filename']);
+});
+
+app.get('/download/jqueryui/menu/:filename', (req, res) => {
+  res.send('public/uploads/jqueryui/menu/' + req.params['filename']);
+});
+
+app.get('/download_secure', isAuthenticated, (req, res) => {
+  var fileNames = fs.readdirSync('public/uploads', { withFileTypes: true })
+    .filter(dirent => dirent.isFile() && dirent.name !== '.gitkeep')
+    .map(dirent => dirent.name);
+  res.render('download', {files: fileNames});
+});
+
+app.get('/download_secure/jqueryui/menu/:filename', isAuthenticated, (req, res) => {
+  res.send('public/uploads/jqueryui/menu/' + req.params['filename']);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

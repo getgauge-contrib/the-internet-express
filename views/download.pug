@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  .example
+    h3 File Downloader
+    each f in files
+      a(href="download/"+f)= f
+      br
