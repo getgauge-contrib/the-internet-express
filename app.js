@@ -8,7 +8,7 @@ var fs = require('fs');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/uploads/')
+    cb(null, path.join(__dirname, 'public','uploads'))
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
@@ -58,33 +58,33 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 app.get('/download', (_req, res) => {
-  var fileNames = fs.readdirSync('public/uploads', { withFileTypes: true })
+  var fileNames = fs.readdirSync(path.join(__dirname, 'public','uploads'), { withFileTypes: true })
     .filter(dirent => dirent.isFile() && dirent.name !== '.gitkeep')
     .map(dirent => dirent.name);
   res.render('download', {files: fileNames});
 });
 
 app.get('/download/:filename', (req, res) => {
-  res.download('public/uploads/' + req.params['filename']);
+  res.download(path.join(__dirname, 'public','uploads', req.params['filename']));
 });
 
 app.get('/download/jqueryui/menu/:filename', (req, res) => {
-  res.download('public/uploads/jqueryui/menu/' + req.params['filename']);
+  res.download(path.join(__dirname, 'public','uploads','jqueryui','menu') + req.params['filename']);
 });
 
 app.get('/download_secure', isAuthenticated, (req, res) => {
-  var fileNames = fs.readdirSync('public/uploads', { withFileTypes: true })
+  var fileNames = fs.readdirSync(path.join(__dirname, 'public','uploads'), { withFileTypes: true })
     .filter(dirent => dirent.isFile() && dirent.name !== '.gitkeep')
     .map(dirent => dirent.name);
   res.render('download', {files: fileNames});
 });
 
 app.get('/download_secure/:filename', (req, res) => {
-  res.download('public/uploads/' + req.params['filename']);
+  res.download(path.join(__dirname, 'public','uploads', req.params['filename']));
 });
 
 app.get('/download_secure/jqueryui/menu/:filename', isAuthenticated, (req, res) => {
-  res.download('public/uploads/jqueryui/menu/' + req.params['filename']);
+  res.download(path.join(__dirname, 'public','uploads', 'jqueryui', 'menu', req.params['filename']));
 });
 
 app.get('/horizontal_slider', (req, res) => {
