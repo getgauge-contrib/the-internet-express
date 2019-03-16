@@ -2,35 +2,15 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var multer  = require('multer')
-var fs = require('fs');
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'public','uploads'))
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-
-var upload = multer({ storage: storage })
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var uploadRouter = require('./routes/upload');
+var downloadRouter = require('./routes/download');
+var downloadSecureRouter = require('./routes/download_secure');
+var horizontalSliderRouter = require('./routes/horizontal_slider');
+var jqueryuiRouter = require('./routes/jqueryui');
+var windowsRouter = require('./routes/windows');
 var app = express();
-
-var isAuthenticated = (req, res, next) => {
-  if(req.user && req.user.authenticated) {
-    return next()
-  } else {
-    res.locals.message = 'Unauthorized';
-    res.locals.error = {status: 401};
-    res.status(401);
-    res.render('error');
-  }
-}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,51 +23,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-app.get('/upload', (_req, res) => {
-  res.render('upload');
-});
-
-app.post('/upload', upload.single('file'), (req, res) => {
-  if(!req.file)
-    res.render('upload');
-  else
-    res.render('uploaded', {uploadedFile: req.file.originalname});
-});
-
-app.get('/download', (_req, res) => {
-  var fileNames = fs.readdirSync(path.join(__dirname, 'public','uploads'), { withFileTypes: true })
-    .filter(dirent => dirent.isFile() && dirent.name !== '.gitkeep')
-    .map(dirent => dirent.name);
-  res.render('download', {files: fileNames});
-});
-
-app.get('/download/:filename', (req, res) => {
-  res.download(path.join(__dirname, 'public','uploads', req.params['filename']));
-});
-
-app.get('/download/jqueryui/menu/:filename', (req, res) => {
-  res.download(path.join(__dirname, 'public','uploads','jqueryui','menu') + req.params['filename']);
-});
-
-app.get('/download_secure', isAuthenticated, (req, res) => {
-  var fileNames = fs.readdirSync(path.join(__dirname, 'public','uploads'), { withFileTypes: true })
-    .filter(dirent => dirent.isFile() && dirent.name !== '.gitkeep')
-    .map(dirent => dirent.name);
-  res.render('download', {files: fileNames});
-});
-
-app.get('/download_secure/:filename', (req, res) => {
-  res.download(path.join(__dirname, 'public','uploads', req.params['filename']));
-});
-
-app.get('/download_secure/jqueryui/menu/:filename', isAuthenticated, (req, res) => {
-  res.download(path.join(__dirname, 'public','uploads', 'jqueryui', 'menu', req.params['filename']));
-});
-
-app.get('/horizontal_slider', (req, res) => {
-  res.render('horizontal_slider');
-});
+app.use('/upload', uploadRouter)
+app.use('/download', downloadRouter);
+app.use('/download_secure', downloadSecureRouter);
+app.use('/horizontal_slider', horizontalSliderRouter);
+app.use('/jqueryui', jqueryuiRouter);
+app.use('/windows', windowsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
