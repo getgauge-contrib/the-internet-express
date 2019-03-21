@@ -21,7 +21,7 @@ router.get('/', isAuthenticated, (req, res) => {
   res.render('download', {files: fileNames});
 });
   
-router.get('/:filename', (req, res) => {
+router.get('/:filename', isAuthenticated, (req, res) => {
   res.download(path.join(__dirname, '..', 'public','uploads', req.params['filename']));
 });
   

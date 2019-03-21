@@ -3,13 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var uploadRouter = require('./routes/upload');
 var downloadRouter = require('./routes/download');
 var downloadSecureRouter = require('./routes/download_secure');
 var horizontalSliderRouter = require('./routes/horizontal_slider');
 var jqueryuiRouter = require('./routes/jqueryui');
 var windowsRouter = require('./routes/windows');
+var dropdownRouter = require('./routes/dropdown');
+var basicAuthRouter = require('./routes/basic_auth');
 var app = express();
 
 // view engine setup
@@ -22,13 +23,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/upload', uploadRouter)
 app.use('/download', downloadRouter);
 app.use('/download_secure', downloadSecureRouter);
 app.use('/horizontal_slider', horizontalSliderRouter);
 app.use('/jqueryui', jqueryuiRouter);
 app.use('/windows', windowsRouter);
+app.use('/dropdown', dropdownRouter);
+app.use('/basic_auth', basicAuthRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
