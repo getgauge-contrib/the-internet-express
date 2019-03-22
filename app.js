@@ -12,6 +12,7 @@ var windowsRouter = require('./routes/windows');
 var dropdownRouter = require('./routes/dropdown');
 var basicAuthRouter = require('./routes/basic_auth');
 var dynamicLoadingRouter = require('./routes/dynamic_loading');
+var dragAndDropRouter = require('./routes/drag_and_drop');
 var app = express();
 
 // view engine setup
@@ -33,6 +34,7 @@ app.use('/windows', windowsRouter);
 app.use('/dropdown', dropdownRouter);
 app.use('/basic_auth', basicAuthRouter);
 app.use('/dynamic_loading', dynamicLoadingRouter);
+app.use('/drag_and_drop', dragAndDropRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
