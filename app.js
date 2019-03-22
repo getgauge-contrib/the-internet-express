@@ -11,6 +11,7 @@ var jqueryuiRouter = require('./routes/jqueryui');
 var windowsRouter = require('./routes/windows');
 var dropdownRouter = require('./routes/dropdown');
 var basicAuthRouter = require('./routes/basic_auth');
+var dynamicLoadingRouter = require('./routes/dynamic_loading');
 var app = express();
 
 // view engine setup
@@ -31,6 +32,7 @@ app.use('/jqueryui', jqueryuiRouter);
 app.use('/windows', windowsRouter);
 app.use('/dropdown', dropdownRouter);
 app.use('/basic_auth', basicAuthRouter);
+app.use('/dynamic_loading', dynamicLoadingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
