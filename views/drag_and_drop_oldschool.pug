@@ -1,0 +1,76 @@
+extends layout
+
+block content
+  style.
+    .container {
+    height: 45px;
+    width: 266px;
+    border: 1px solid lightgray;
+    margin-bottom: 6px;
+    padding:10px;
+    }
+    #order-button {
+    font-size: 0.8em;
+    }
+    .order-display {
+    font-family: monospace;
+    font-size: 2em;
+    padding: 5px;
+    }
+    .box {
+    padding: 3px 8px;
+    text-align:center;
+    background-color:dodgerblue;
+    color:white;
+    font-size: 1.1em;
+    width: 40px;
+    margin-right: 5px;
+    cursor:pointer;
+    float:left;
+    }
+    .highlight {
+    background-color: coral;
+    }
+    #groovy-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    }
+  script.
+    $(document).ready(function(){
+    var x,y,
+    container = $('.container'),
+    button = $('#order-button'),
+    orderDisplay = $('.order-display');
+    container.delegate('.box','mouseenter mouseout',handleMouse);
+    container.sortable();
+    button.button();
+    button.click(function(e){
+    var ret='',
+    ar = container.sortable('toArray')
+    for (key in ar) {
+    ret += ar[key];
+    }
+    orderDisplay.html(ret);
+    })
+    function handleMouse(e) {
+    if (e.type == "mouseenter") {
+    $(this).addClass('highlight');
+    }
+    else if (e.type == "mouseout") {
+    $(this).removeClass('highlight');
+    }
+    }
+    for (x=0; x<4; x++) {
+    console.log(x+","+y);
+    var box = $('<div class="box"></div>');
+    box.attr('id',x);
+    box.html(x);
+    box.sortable();
+    container.append(box);
+    }
+    });
+  p Click and drag to reorder the boxes
+  .container
+  button#order-button Display the Order
+  .order-display

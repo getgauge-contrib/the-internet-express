@@ -12,7 +12,7 @@ var authenticated = (req, res, next) => {
   next();
 };
 
-router.get('/', authenticated, function(req, res, next) {
+router.get('/', authenticated, (req, res, next) => {
   res.render('basic_auth');
 });
 
