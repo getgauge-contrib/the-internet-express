@@ -1,0 +1,14 @@
+{
+  "name": "cypress-test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "cy:open": "./node_modules/.bin/cypress open",
+    "test": "./node_modules/.bin/cypress run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^3.2.0",
+    "mocha": "^6.1.4"
+  }
+}

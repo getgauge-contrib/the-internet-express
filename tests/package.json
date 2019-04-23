@@ -1,0 +1,16 @@
+{
+  "name": "webdriver-test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "mocha ./webdriver-test/specs/**/*.spec.js && ./node_modules/.bin/cypress run && mocha ./taiko-test/specs/**/*.spec.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chromedriver": "^73.0.0",
+    "cypress": "^3.2.0",
+    "mocha": "^6.1.4",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "taiko": "^0.6.0"
+  }
+}
