@@ -1,5 +1,4 @@
 require('chromedriver')
-const performance = require('perf_hooks').performance;
 const {
   Builder,
   By,
