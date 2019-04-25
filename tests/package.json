@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "mocha ./webdriver-test/specs/**/*.spec.js && ./node_modules/.bin/cypress run && mocha ./taiko-test/specs/**/*.spec.js && ./node_modules/.bin/testcafe chrome ./testcafe-test/specs/**/*.spec.js"
+    "test": "mocha ./webdriver-test/specs/**/*.spec.js && ./node_modules/.bin/cypress run --browser chrome && mocha ./taiko-test/specs/**/*.spec.js && ./node_modules/.bin/testcafe chrome ./testcafe-test/specs/**/*.spec.js"
   },
   "dependencies": {},
   "devDependencies": {
