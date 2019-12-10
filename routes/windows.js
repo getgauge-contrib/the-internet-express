@@ -8,5 +8,5 @@ router.get('/', (req, res, next) => {
 router.get('/new', (req, res, next) => {
   res.render('new_window');
 });
-  
+
 module.exports = router;
