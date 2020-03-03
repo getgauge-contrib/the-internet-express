@@ -1,0 +1,12 @@
+{
+  "name": "testcafe-test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "./node_modules/.bin/testcafe chrome ./specs/**/*.spec.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "testcafe": "^1.1.3"
+  }
+}

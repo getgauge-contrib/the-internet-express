@@ -10,6 +10,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
 # Runtime data
 pids
 *.pid
@@ -87,3 +88,9 @@ typings/
 # End of https://www.gitignore.io/api/node
 
 public/uploads/**
+
+# Test dependency directory
+tests/node_modules/
+
+# Test logs
+npm-debug.log*
