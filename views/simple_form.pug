@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  .example
+    h3 Simple Form
+    form(method='POST' action="/submit_form")
+      input#name(type='text' name='name')
+      br
+      input#file-submit.button(type='submit' value='Submit')
